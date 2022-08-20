@@ -9,4 +9,4 @@ Main: *.hs
 	ghc Main.hs
 
 clean:
-	rm -f *.hi *.o
+	rm -f *.hi *.o Main
