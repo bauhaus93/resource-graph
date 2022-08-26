@@ -1,11 +1,14 @@
-module ProductionChain (Node, get_node, ProductionChain.to_inputs) where
+{-# LANGUAGE Safe #-}
 
-import Data.List (sortOn)
-import Data.Maybe (mapMaybe)
-import Factory
-import Recipe
-import Resource
-import Throughput
+module ProductionChain (Node, get_node, ProductionChain.to_inputs, to_graph_output) where
+
+import Data.List (elem, foldr, head, reverse, sortOn, (++))
+import Data.Maybe (Maybe (Just, Nothing), mapMaybe)
+import Factory (Factory, to_recipes)
+import Recipe (Recipe, calculate_factor_for_rate, to_comparable_by_output, to_inputs, to_output_resources)
+import Resource (Resource)
+import Throughput (Throughput, multiply, to_quantity, to_resource)
+import Prelude (Float, Integer, Show, String, fromIntegral, show, (.), (<$>), (<*>), (>>=))
 
 data Node = Node
   { recipe :: Recipe,
@@ -21,13 +24,30 @@ instance Show Node where
         [] -> ""
         xs -> xs >>= show
 
+to_graph_output :: String -> Node -> String
+to_graph_output node_id node =
+  foldr
+    (++)
+    ""
+    [ node_name,
+      "[label=\"",
+      label,
+      "\" fillcolor=",
+      color,
+      "; style=filled]"
+    ]
+  where
+    node_name = "node_" ++ node_id
+    label = "label"
+    color = "aliceblue"
+
 get_node :: Factory -> Resource -> Float -> Maybe Node
 get_node factory target_resource target_rate = to_node <$> maybe_recipe <*> maybe_factor
   where
     to_node :: Recipe -> Integer -> Node
-    to_node recipe factor =
+    to_node used_recipe factor =
       Node
-        { recipe = recipe,
+        { recipe = used_recipe,
           amount = factor,
           inputs =
             mapMaybe
@@ -35,7 +55,7 @@ get_node factory target_resource target_rate = to_node <$> maybe_recipe <*> mayb
                   . to_res_quant_pair
                   . Throughput.multiply (fromIntegral factor)
               )
-              (Recipe.to_inputs recipe)
+              (Recipe.to_inputs used_recipe)
         }
     to_res_quant_pair :: Throughput -> (Resource, Float)
     to_res_quant_pair throughput = (Throughput.to_resource throughput, Throughput.to_quantity throughput)

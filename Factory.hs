@@ -1,9 +1,14 @@
+{-# LANGUAGE Safe #-}
+
 module Factory (Factory, create_factory, to_recipes) where
 
-import Facility
-import Factorio
-import Recipe
-import Resource
+import Data.List (foldr, map, (++))
+import Data.Maybe (Maybe (Just, Nothing))
+import Facility (Facility)
+import Factorio (get_facilities, get_recipes, get_resources)
+import Recipe (Recipe)
+import Resource (Resource, to_name)
+import Prelude (Show, String, show)
 
 data Factory = Factory
   { resources :: [Resource],
@@ -48,5 +53,5 @@ create_factory name =
     _ -> Nothing
 
 from_parts :: [Resource] -> [Facility] -> ([Resource] -> [Facility] -> [Recipe]) -> Factory
-from_parts resources facilites recipe_fn =
-  Factory resources facilites (recipe_fn resources facilites)
+from_parts factory_resources factory_facilites recipe_fn =
+  Factory factory_resources factory_facilites (recipe_fn factory_resources factory_facilites)

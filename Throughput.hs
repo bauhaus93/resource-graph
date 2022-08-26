@@ -1,6 +1,11 @@
+{-# LANGUAGE Safe #-}
+
 module Throughput (Throughput, multiply, create, to_quantity, with_probability, to_resource, calculate_demand_factor) where
 
-import Resource
+import Data.List ((++))
+import Data.Maybe (Maybe (Just, Nothing))
+import Resource (Resource, to_name)
+import Prelude (Float, Integer, Show, round, show, (*), (.), (/))
 
 data Throughput = Throughput
   { resource :: Resource,
@@ -13,14 +18,14 @@ instance Show Throughput where
     where
       probability_string =
         case to_maybe_probability throughput of
-          Just probability -> " @ " ++ show (probability * 100) ++ "%"
+          Just prob -> " @ " ++ show (prob * 100) ++ "%"
           Nothing -> ""
 
 create :: Resource -> Float -> Throughput
-create res quantity = Throughput {resource = res, quantity = quantity, probability = Nothing}
+create res target_quantity = Throughput {resource = res, quantity = target_quantity, probability = Nothing}
 
 with_probability :: Float -> Throughput -> Throughput
-with_probability probability throughput = throughput {probability = Just probability}
+with_probability prob throughput = throughput {probability = Just prob}
 
 multiply :: Float -> Throughput -> Throughput
 multiply factor throughput = throughput {quantity = ((*) factor . to_quantity) throughput}

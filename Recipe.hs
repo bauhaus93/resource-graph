@@ -1,8 +1,13 @@
+{-# LANGUAGE Safe #-}
+
 module Recipe (Recipe, RecipeComparableByOutput, calculate_factor_for_rate, to_comparable_by_output, get_recipes, Recipe.create, add_input, add_output, to_inputs, to_output, to_outputs, to_output_resources, calculate_resource_output_rate) where
 
-import Facility
-import Resource
-import Throughput
+import Data.List (foldr, head, map, tail, (++))
+import Data.Maybe (Maybe (Just, Nothing))
+import Facility (Facility, to_name, to_speed)
+import Resource (Resource)
+import Throughput (Throughput, create, to_quantity, to_resource)
+import Prelude (Eq, Float, Integer, Ord, Show, String, abs, ceiling, show, (-), (.), (/), (<$>), (<=), (==), (>>=))
 
 data Recipe = Recipe
   { name :: Maybe String,
@@ -16,7 +21,7 @@ instance Show Recipe where
   show recipe = Facility.to_name (facility recipe) ++ " (" ++ recipe_name ++ (show (production_time recipe)) ++ "s)" ++ ": " ++ tail inputs_string ++ " -> " ++ tail outputs_string
     where
       recipe_name = case name recipe of
-        Just name -> name ++ ", "
+        Just n -> n ++ ", "
         Nothing -> ""
       inputs_string = (to_inputs recipe) >>= (\e -> ", " ++ show e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
       outputs_string = (to_outputs recipe) >>= (\e -> ", " ++ show e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
@@ -37,10 +42,7 @@ to_comparable_by_output :: Resource -> Recipe -> RecipeComparableByOutput
 to_comparable_by_output = RecipeComparableByOutput
 
 create :: Facility -> Float -> [Throughput] -> [Throughput] -> Recipe
-create facility production_time inputs outputs = Recipe {name = Nothing, facility = facility, production_time = production_time / (Facility.to_speed facility), input = inputs, output = outputs}
-
-with_name :: Recipe -> String -> Recipe
-with_name recipe name = recipe {name = Just name}
+create recipe_facility recipe_production_time inputs outputs = Recipe {name = Nothing, facility = recipe_facility, production_time = recipe_production_time / (Facility.to_speed recipe_facility), input = inputs, output = outputs}
 
 add_input :: Resource -> Float -> Recipe -> Recipe
 add_input resource quantity recipe = recipe {input = new_input : (to_inputs recipe)}
@@ -59,11 +61,6 @@ calculate_factor_for_rate :: Resource -> Float -> Recipe -> Maybe Integer
 calculate_factor_for_rate resource target_rate recipe = (ceiling . (\q -> target_rate / (q / time)) . Throughput.to_quantity) <$> Recipe.to_output resource recipe
   where
     time = Recipe.to_production_time recipe
-
-calculate_factor_for_demands :: Recipe -> [Throughput] -> Integer
-calculate_factor_for_demands recipe demands = (foldr max 1 . map (\(base, demand) -> Throughput.calculate_demand_factor base demand)) base_with_demands
-  where
-    base_with_demands = [(base, demand) | base <- to_outputs recipe, demand <- demands, Throughput.to_resource base == Throughput.to_resource demand]
 
 to_inputs :: Recipe -> [Throughput]
 to_inputs recipe = input recipe

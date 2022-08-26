@@ -1,9 +1,14 @@
+{-# LANGUAGE Safe #-}
+
 module Factorio (get_resources, get_facilities, Factorio.get_recipes) where
 
-import Facility
-import Recipe
-import Resource
-import Throughput
+import Data.List (foldr, map, (++))
+import Data.Maybe (Maybe (Just))
+import Facility (Facility, create, to_category, to_name)
+import Recipe (Recipe, create)
+import Resource (Resource, from_name, to_name)
+import Throughput (create, with_probability)
+import Prelude (String, (.), (>>=))
 
 ore_names :: [String]
 ore_names = ["Wood", "Iron Ore", "Copper Ore", "Stone Ore", "Coal", "Uranium Ore"]
@@ -67,6 +72,7 @@ get_recipes_assembly res facility =
             [Throughput.create (Resource.from_name "Copper Cable") 2.0]
         ]
       _ -> []
+    _ -> []
 
 get_recipes_furnance :: Resource -> Facility -> [Recipe]
 get_recipes_furnance res facility =
@@ -94,6 +100,7 @@ get_recipes_furnance res facility =
             [Throughput.create (Resource.from_name "Steel Plate") 1.0]
         ]
       _ -> []
+    _ -> []
 
 get_recipes_chemical :: Resource -> Facility -> [Recipe]
 get_recipes_chemical res facility =
@@ -166,6 +173,7 @@ get_recipes_chemical res facility =
             ]
         ]
       _ -> []
+    _ -> []
 
 get_resources :: [Resource]
 get_resources = map Resource.from_name resource_names

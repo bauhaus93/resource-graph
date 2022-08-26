@@ -1,4 +1,9 @@
+{-# LANGUAGE Safe #-}
+
 module Resource (Resource, create_resources, to_name, from_name) where
+
+import Data.List (map)
+import Prelude (Eq, Show, String, show, (==))
 
 data Resource = Resource
   { name :: String
@@ -17,4 +22,4 @@ to_name :: Resource -> String
 to_name res = name res
 
 from_name :: String -> Resource
-from_name name = Resource {name = name}
+from_name res_name = Resource {name = res_name}

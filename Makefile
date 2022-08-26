@@ -2,11 +2,11 @@
 
 all: run
 
-run: Main
-	./Main
+run: assembly_line
+	./assembly_line
 
-Main: *.hs
-	ghc Main.hs
+assembly_line: *.hs
+	ghc -Wall -Weverything -o assembly_line *.hs
 
 clean:
-	rm -f *.hi *.o Main
+	rm -f *.hi *.o assembly_line
