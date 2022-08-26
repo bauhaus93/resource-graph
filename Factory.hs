@@ -1,4 +1,4 @@
-module Factory (Factory, create_factory, Factory.to_string) where
+module Factory (Factory, create_factory, to_recipes) where
 
 import Facility
 import Factorio
@@ -10,6 +10,15 @@ data Factory = Factory
     facilites :: [Facility],
     recipes :: [Recipe]
   }
+
+instance Show Factory where
+  show factory =
+    "+++ Resource Pool +++\n"
+      ++ (to_resource_string factory)
+      ++ "\n+++ Available Facilities +++\n"
+      ++ (to_facility_string factory)
+      ++ "\n+++ Available Recipes +++\n"
+      ++ (to_recipe_string factory)
 
 to_resources :: Factory -> [Resource.Resource]
 to_resources factory = resources factory
@@ -27,19 +36,10 @@ to_resource_string :: Factory -> String
 to_resource_string factory = join_strings (map Resource.to_name (to_resources factory))
 
 to_facility_string :: Factory -> String
-to_facility_string factory = join_strings (map Facility.to_string (to_facilities factory))
+to_facility_string factory = join_strings (map show (to_facilities factory))
 
 to_recipe_string :: Factory -> String
-to_recipe_string factory = join_strings (map Recipe.to_string (to_recipes factory))
-
-to_string :: Factory -> String
-to_string factory =
-  "+++ Resource Pool +++\n"
-    ++ (to_resource_string factory)
-    ++ "\n+++ Available Facilities +++\n"
-    ++ (to_facility_string factory)
-    ++ "\n+++ Available Recipes +++\n"
-    ++ (to_recipe_string factory)
+to_recipe_string factory = join_strings (map show (to_recipes factory))
 
 create_factory :: String -> Maybe Factory
 create_factory name =

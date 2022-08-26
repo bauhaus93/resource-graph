@@ -1,4 +1,4 @@
-module Recipe (Recipe, get_recipes, Recipe.to_string, Recipe.create, add_input, add_output) where
+module Recipe (Recipe, RecipeComparableByOutput, calculate_factor_for_rate, to_comparable_by_output, get_recipes, Recipe.create, add_input, add_output, to_inputs, to_output, to_outputs, to_output_resources, calculate_resource_output_rate) where
 
 import Facility
 import Resource
@@ -12,6 +12,30 @@ data Recipe = Recipe
     output :: [Throughput]
   }
 
+instance Show Recipe where
+  show recipe = Facility.to_name (facility recipe) ++ " (" ++ recipe_name ++ (show (production_time recipe)) ++ "s)" ++ ": " ++ tail inputs_string ++ " -> " ++ tail outputs_string
+    where
+      recipe_name = case name recipe of
+        Just name -> name ++ ", "
+        Nothing -> ""
+      inputs_string = (to_inputs recipe) >>= (\e -> ", " ++ show e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
+      outputs_string = (to_outputs recipe) >>= (\e -> ", " ++ show e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
+
+data RecipeComparableByOutput = RecipeComparableByOutput Resource Recipe
+
+instance Ord RecipeComparableByOutput where
+  (<=) (RecipeComparableByOutput a_res a_rec) (RecipeComparableByOutput b_res b_rec) = (calculate_resource_output_rate a_res a_rec) <= (calculate_resource_output_rate b_res b_rec)
+
+instance Eq RecipeComparableByOutput where
+  (==) (RecipeComparableByOutput a_res a_rec) (RecipeComparableByOutput b_res b_rec) =
+    abs (output_a - output_b) <= 0.003
+    where
+      output_a = calculate_resource_output_rate a_res a_rec
+      output_b = calculate_resource_output_rate b_res b_rec
+
+to_comparable_by_output :: Resource -> Recipe -> RecipeComparableByOutput
+to_comparable_by_output = RecipeComparableByOutput
+
 create :: Facility -> Float -> [Throughput] -> [Throughput] -> Recipe
 create facility production_time inputs outputs = Recipe {name = Nothing, facility = facility, production_time = production_time / (Facility.to_speed facility), input = inputs, output = outputs}
 
@@ -19,32 +43,46 @@ with_name :: Recipe -> String -> Recipe
 with_name recipe name = recipe {name = Just name}
 
 add_input :: Resource -> Float -> Recipe -> Recipe
-add_input resource quantity recipe = recipe {input = new_input : (input recipe)}
+add_input resource quantity recipe = recipe {input = new_input : (to_inputs recipe)}
   where
     new_input = Throughput.create resource quantity
 
 add_output :: Resource -> Float -> Recipe -> Recipe
-add_output resource quantity recipe = recipe {output = new_output : (output recipe)}
+add_output resource quantity recipe = recipe {output = new_output : (to_outputs recipe)}
   where
     new_output = Throughput.create resource quantity
 
 get_recipes :: [Resource] -> (Resource -> [Recipe]) -> [Recipe]
 get_recipes resources recipe_fn = (foldr (++) [] . map recipe_fn) resources
 
-to_string :: Recipe -> String
-to_string recipe = Facility.to_name (facility recipe) ++ " (" ++ recipe_name ++ (show (production_time recipe)) ++ "s)" ++ ": " ++ tail inputs_string ++ " -> " ++ tail outputs_string
+calculate_factor_for_rate :: Resource -> Float -> Recipe -> Maybe Integer
+calculate_factor_for_rate resource target_rate recipe = (ceiling . (\q -> target_rate / (q / time)) . Throughput.to_quantity) <$> Recipe.to_output resource recipe
   where
-    recipe_name = case name recipe of
-      Just name -> name ++ ", "
-      Nothing -> ""
-    inputs_string = (to_inputs recipe) >>= (\e -> ", " ++ Throughput.to_string e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
-    outputs_string = (to_outputs recipe) >>= (\e -> ", " ++ Throughput.to_string e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
+    time = Recipe.to_production_time recipe
+
+calculate_factor_for_demands :: Recipe -> [Throughput] -> Integer
+calculate_factor_for_demands recipe demands = (foldr max 1 . map (\(base, demand) -> Throughput.calculate_demand_factor base demand)) base_with_demands
+  where
+    base_with_demands = [(base, demand) | base <- to_outputs recipe, demand <- demands, Throughput.to_resource base == Throughput.to_resource demand]
 
 to_inputs :: Recipe -> [Throughput]
 to_inputs recipe = input recipe
 
 to_outputs :: Recipe -> [Throughput]
 to_outputs recipe = output recipe
+
+to_output :: Resource -> Recipe -> Maybe Throughput
+to_output wanted_resource recipe = case outputs_with_resource of
+  [] -> Nothing
+  xs -> Just (head xs)
+  where
+    outputs_with_resource = [out | out <- Recipe.to_outputs recipe, Throughput.to_resource out == wanted_resource]
+
+to_output_resources :: Recipe -> [Resource]
+to_output_resources recipe = map Throughput.to_resource (Recipe.to_outputs recipe)
+
+calculate_resource_output_rate :: Resource -> Recipe -> Float
+calculate_resource_output_rate target_resource recipe = (calculate_rate recipe . head) [tp | tp <- to_outputs recipe, Throughput.to_resource tp == target_resource]
 
 to_production_time :: Recipe -> Float
 to_production_time recipe = production_time recipe

@@ -1,10 +1,13 @@
-module Facility (Facility, from_name, from_names, with_category, to_category, to_name, to_speed, to_string, create) where
+module Facility (Facility, from_name, from_names, with_category, to_category, to_name, to_speed, create) where
 
 data Facility = Facility
   { name :: String,
     speed :: Float,
     category :: Maybe String
   }
+
+instance Show Facility where
+  show facility = (to_name facility) ++ " (" ++ (show . to_speed) facility ++ ")"
 
 create :: String -> String -> Float -> Facility
 create name category speed = Facility {name = name, category = Just category, speed = speed}
@@ -20,9 +23,6 @@ with_category category_name facility = facility {category = Just category_name}
 
 with_speed :: Float -> Facility -> Facility
 with_speed speed facility = facility {speed = speed}
-
-to_string :: Facility -> String
-to_string facility = (to_name facility) ++ " (" ++ (show . to_speed) facility ++ ")"
 
 to_name :: Facility -> String
 to_name facility = name facility
