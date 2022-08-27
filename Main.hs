@@ -12,7 +12,7 @@ target_factory = "factorio"
 
 main :: IO ()
 main =
-  putStrLn print_factory
+  putStrLn draw_graph
 
 print_factory :: String
 print_factory = maybe "ERROR" show $ Factory.create_factory $ target_factory

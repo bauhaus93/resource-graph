@@ -4,7 +4,7 @@ module Draw (draw) where
 
 import Data.List (foldr, map, (++))
 import Facility (to_name)
-import Graph (GraphNode, to_children, to_graph_node, to_node, to_node_name)
+import Graph (GraphNode, to_children, to_graph_node, to_id, to_node)
 import ProductionChain (Node, to_recipe)
 import Recipe (to_facility, to_name, to_output_resources)
 import Resource (Resource, to_name)
@@ -16,7 +16,7 @@ instance Show DrawableNode where
   show (DrawableNode n) = foldr (++) "" [draw_node_str n, draw_edge_str n, draw_children_str n]
 
 draw :: Node -> String
-draw = (wrap_digraph . show . (DrawableNode . (to_graph_node 0)))
+draw = (wrap_digraph . show . (DrawableNode . (to_graph_node "node_0")))
 
 wrap_digraph :: String -> String
 wrap_digraph content =
@@ -33,9 +33,9 @@ draw_node_str graph_node =
   foldr
     (++)
     ""
-    [node_name, "[label=\"", label, "\" fillcolor=", color, "; style=filled]\n"]
+    [node_id, "[label=\"", label, "\" fillcolor=", color, "; style=filled]\n"]
   where
-    node_name = to_node_name graph_node
+    node_id = to_id graph_node
     label = to_node_label graph_node
     color = "aliceblue"
 
@@ -57,9 +57,9 @@ draw_edge_str graph_node = (foldr (++) "" . map (to_edge_str graph_node)) $ Grap
     to_edge_str :: GraphNode -> GraphNode -> String
     to_edge_str parent child =
       foldr (++) "" $
-        [ Graph.to_node_name child,
+        [ Graph.to_id child,
           " -> ",
-          Graph.to_node_name parent,
+          Graph.to_id parent,
           to_edge_label parent child,
           "\n"
         ]
