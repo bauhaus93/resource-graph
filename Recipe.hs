@@ -1,13 +1,13 @@
 {-# LANGUAGE Safe #-}
 
-module Recipe (Recipe, RecipeComparableByOutput, calculate_factor_for_rate, to_comparable_by_output, get_recipes, Recipe.create, add_input, add_output, to_inputs, to_output, to_outputs, to_output_resources, calculate_resource_output_rate) where
+module Recipe (Recipe, RecipeComparableByOutput, calculate_factor_for_rate, to_comparable_by_output, get_recipes, Recipe.create, add_input, add_output, to_inputs, to_output, to_outputs, to_output_resources, calculate_resource_output_rate, Recipe.to_name, to_facility) where
 
 import Data.List (foldr, head, map, tail, (++))
 import Data.Maybe (Maybe (Just, Nothing))
 import Facility (Facility, to_name, to_speed)
-import Resource (Resource)
+import Resource (Resource, to_name)
 import Throughput (Throughput, create, to_quantity, to_resource)
-import Prelude (Eq, Float, Integer, Ord, Show, String, abs, ceiling, show, (-), (.), (/), (<$>), (<=), (==), (>>=))
+import Prelude (Eq, Float, Integer, Ord, Show, String, abs, ceiling, show, ($), (-), (.), (/), (<$>), (<=), (==), (>>=))
 
 data Recipe = Recipe
   { name :: Maybe String,
@@ -55,7 +55,7 @@ add_output resource quantity recipe = recipe {output = new_output : (to_outputs 
     new_output = Throughput.create resource quantity
 
 get_recipes :: [Resource] -> (Resource -> [Recipe]) -> [Recipe]
-get_recipes resources recipe_fn = (foldr (++) [] . map recipe_fn) resources
+get_recipes resources recipe_fn = foldr (++) [] . map recipe_fn $ resources
 
 calculate_factor_for_rate :: Resource -> Float -> Recipe -> Maybe Integer
 calculate_factor_for_rate resource target_rate recipe = (ceiling . (\q -> target_rate / (q / time)) . Throughput.to_quantity) <$> Recipe.to_output resource recipe
@@ -75,14 +75,25 @@ to_output wanted_resource recipe = case outputs_with_resource of
   where
     outputs_with_resource = [out | out <- Recipe.to_outputs recipe, Throughput.to_resource out == wanted_resource]
 
+to_facility :: Recipe -> Facility
+to_facility = facility
+
 to_output_resources :: Recipe -> [Resource]
-to_output_resources recipe = map Throughput.to_resource (Recipe.to_outputs recipe)
+to_output_resources recipe = map Throughput.to_resource $ Recipe.to_outputs recipe
 
 calculate_resource_output_rate :: Resource -> Recipe -> Float
-calculate_resource_output_rate target_resource recipe = (calculate_rate recipe . head) [tp | tp <- to_outputs recipe, Throughput.to_resource tp == target_resource]
+calculate_resource_output_rate target_resource recipe = calculate_rate recipe . head $ [tp | tp <- to_outputs recipe, Throughput.to_resource tp == target_resource]
 
 to_production_time :: Recipe -> Float
 to_production_time recipe = production_time recipe
+
+to_maybe_name :: Recipe -> Maybe String
+to_maybe_name = name
+
+to_name :: Recipe -> String
+to_name rec = case to_maybe_name rec of
+  Just recipe_name -> recipe_name
+  Nothing -> foldr (++) "" $ map Resource.to_name $ to_output_resources rec
 
 calculate_rate :: Recipe -> Throughput -> Float
 calculate_rate recipe throughput = (Throughput.to_quantity throughput) / (to_production_time recipe)

@@ -71,6 +71,49 @@ get_recipes_assembly res facility =
             [Throughput.create (Resource.from_name "Copper Plate") 1.0]
             [Throughput.create (Resource.from_name "Copper Cable") 2.0]
         ]
+      "Iron Stick" ->
+        [ Recipe.create
+            facility
+            0.5
+            [Throughput.create (Resource.from_name "Iron Plate") 1.0]
+            [Throughput.create (Resource.from_name "Iron Stick") 2.0]
+        ]
+      "Iron Gear Wheel" ->
+        [ Recipe.create
+            facility
+            0.5
+            [Throughput.create (Resource.from_name "Iron Plate") 2.0]
+            [Throughput.create (Resource.from_name "Iron Gear Wheel") 1.0]
+        ]
+      "Electronic Circuit" ->
+        [ Recipe.create
+            facility
+            0.5
+            [ Throughput.create (Resource.from_name "Iron Plate") 1.0,
+              Throughput.create (Resource.from_name "Copper Cable") 3.0
+            ]
+            [Throughput.create (Resource.from_name "Electronic Circuit") 1.0]
+        ]
+      "Advanced Circuit" ->
+        [ Recipe.create
+            facility
+            6
+            [ Throughput.create (Resource.from_name "Plastic Bar") 2.0,
+              Throughput.create (Resource.from_name "Copper Cable") 4.0,
+              Throughput.create (Resource.from_name "Electronic Circuit") 2.0
+            ]
+            [Throughput.create (Resource.from_name "Advanced Circuit") 1.0]
+        ]
+      "Processing Unit" ->
+        [ Recipe.create
+            facility
+            10
+            [ Throughput.create (Resource.from_name "Sulfuric Acid") 5.0,
+              Throughput.create (Resource.from_name "Advanced Circuit") 2.0,
+              Throughput.create (Resource.from_name "Electronic Circuit") 20.0
+            ]
+            [Throughput.create (Resource.from_name "Processing Unit") 1.0]
+        ]
       _ -> []
     _ -> []
 
