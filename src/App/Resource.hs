@@ -1,6 +1,6 @@
 {-# LANGUAGE Safe #-}
 
-module Resource (Resource, create_resources, to_name, from_name) where
+module App.Resource (Resource, create_resources, to_name, from_name) where
 
 import Data.List (map)
 import Prelude (Eq, Show, String, show, (==))

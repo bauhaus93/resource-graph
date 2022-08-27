@@ -1,13 +1,13 @@
 {-# LANGUAGE Safe #-}
 
-module Factory (Factory, create_factory, to_recipes) where
+module App.Factory (Factory, create_factory, to_recipes) where
 
+import App.Facility as Facility (Facility)
+import App.Factorio.Factorio as Factorio (get_facilities, get_recipes, get_resources)
+import App.Recipe as Recipe (Recipe)
+import App.Resource as Resource (Resource, to_name)
 import Data.List (foldr, map, (++))
 import Data.Maybe (Maybe (Just, Nothing))
-import Facility (Facility)
-import Factorio (get_facilities, get_recipes, get_resources)
-import Recipe (Recipe)
-import Resource (Resource, to_name)
 import Prelude (Show, String, show)
 
 data Factory = Factory
@@ -25,13 +25,13 @@ instance Show Factory where
       ++ "\n+++ Available Recipes +++\n"
       ++ (to_recipe_string factory)
 
-to_resources :: Factory -> [Resource.Resource]
+to_resources :: Factory -> [Resource]
 to_resources factory = resources factory
 
-to_facilities :: Factory -> [Facility.Facility]
+to_facilities :: Factory -> [Facility]
 to_facilities factory = facilites factory
 
-to_recipes :: Factory -> [Recipe.Recipe]
+to_recipes :: Factory -> [Recipe]
 to_recipes factory = recipes factory
 
 join_strings :: [String] -> String

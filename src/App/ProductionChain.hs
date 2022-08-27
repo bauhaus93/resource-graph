@@ -1,13 +1,13 @@
 {-# LANGUAGE Safe #-}
 
-module ProductionChain (Node, get_node, ProductionChain.to_inputs, to_recipe) where
+module App.ProductionChain (Node, get_node, App.ProductionChain.to_inputs, to_recipe) where
 
+import App.Factory as Factory (Factory, to_recipes)
+import App.Recipe as Recipe (Recipe, calculate_factor_for_rate, to_comparable_by_output, to_inputs, to_output_resources)
+import App.Resource as Resource (Resource)
+import App.Throughput as Throughput (Throughput, multiply, to_quantity, to_resource)
 import Data.List (elem, head, reverse, sortOn, (++))
 import Data.Maybe (Maybe (Just, Nothing), mapMaybe)
-import Factory (Factory, to_recipes)
-import Recipe (Recipe, calculate_factor_for_rate, to_comparable_by_output, to_inputs, to_output_resources)
-import Resource (Resource)
-import Throughput (Throughput, multiply, to_quantity, to_resource)
 import Prelude (Float, Integer, Show, fromIntegral, show, ($), (.), (<$>), (<*>), (>>=))
 
 data Node = Node
@@ -20,7 +20,7 @@ instance Show Node where
   show node = show recipe_str ++ "\n" ++ inputs_str
     where
       recipe_str = ((show . to_amount) node) ++ " x " ++ ((show . to_recipe) node)
-      inputs_str = case (ProductionChain.to_inputs node) of
+      inputs_str = case (App.ProductionChain.to_inputs node) of
         [] -> ""
         xs -> xs >>= show
 

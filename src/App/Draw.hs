@@ -1,13 +1,13 @@
 {-# LANGUAGE Safe #-}
 
-module Draw (draw) where
+module App.Draw (draw) where
 
+import App.Facility as Facility (to_name)
+import App.Graph as Graph (GraphNode, to_children, to_graph_node, to_id, to_node)
+import App.ProductionChain as ProductionChain (Node, to_recipe)
+import App.Recipe as Recipe (to_facility, to_output_resources)
+import App.Resource as Resource (Resource, to_name)
 import Data.List (foldr, map, (++))
-import Facility (to_name)
-import Graph (GraphNode, to_children, to_graph_node, to_id, to_node)
-import ProductionChain (Node, to_recipe)
-import Recipe (to_facility, to_name, to_output_resources)
-import Resource (Resource, to_name)
 import Prelude (Show, String, show, ($), (.))
 
 newtype DrawableNode = DrawableNode GraphNode

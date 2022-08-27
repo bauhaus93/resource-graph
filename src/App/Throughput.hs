@@ -1,10 +1,10 @@
 {-# LANGUAGE Safe #-}
 
-module Throughput (Throughput, multiply, create, to_quantity, with_probability, to_resource, calculate_demand_factor) where
+module App.Throughput (Throughput (Throughput), multiply, to_quantity, with_probability, to_resource, calculate_demand_factor) where
 
+import App.Resource (Resource, to_name)
 import Data.List ((++))
 import Data.Maybe (Maybe (Just, Nothing))
-import Resource (Resource, to_name)
 import Prelude (Float, Integer, Show, round, show, (*), (.), (/))
 
 data Throughput = Throughput
@@ -14,15 +14,12 @@ data Throughput = Throughput
   }
 
 instance Show Throughput where
-  show throughput = (show . to_quantity) throughput ++ probability_string ++ " x '" ++ ((\e -> (++) e "'") . Resource.to_name . to_resource) throughput
+  show throughput = (show . to_quantity) throughput ++ probability_string ++ " x '" ++ ((\e -> (++) e "'") . to_name . to_resource) throughput
     where
       probability_string =
         case to_maybe_probability throughput of
           Just prob -> " @ " ++ show (prob * 100) ++ "%"
           Nothing -> ""
-
-create :: Resource -> Float -> Throughput
-create res target_quantity = Throughput {resource = res, quantity = target_quantity, probability = Nothing}
 
 with_probability :: Float -> Throughput -> Throughput
 with_probability prob throughput = throughput {probability = Just prob}

@@ -1,6 +1,6 @@
 {-# LANGUAGE Safe #-}
 
-module Facility (Facility, from_name, from_names, with_category, to_category, to_name, to_speed, create) where
+module App.Facility (Facility (Facility), from_name, from_names, with_category, to_category, to_name, to_speed) where
 
 import Data.List (map, (++))
 import Data.Maybe (Maybe (Just, Nothing))
@@ -14,10 +14,6 @@ data Facility = Facility
 
 instance Show Facility where
   show facility = (to_name facility) ++ " (" ++ (show . to_speed) facility ++ ")"
-
-create :: String -> String -> Float -> Facility
-create facility_name facility_category facility_speed =
-  Facility {name = facility_name, category = Just facility_category, speed = facility_speed}
 
 from_name :: String -> Facility
 from_name facility_name = Facility {name = facility_name, speed = 1.0, category = Nothing}
