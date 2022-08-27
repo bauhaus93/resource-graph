@@ -6,6 +6,7 @@ import App.Facility as Facility (Facility, to_category)
 import App.Recipe as Recipe (Recipe, create)
 import App.Resource as Resource (Resource, from_name, to_name)
 import App.Throughput as Throughput (Throughput (Throughput))
+import Data.List (elem)
 import Data.Maybe (Maybe (Just, Nothing))
 import Prelude ()
 
@@ -68,16 +69,42 @@ get_recipes_chemical res facility =
             ]
             [Throughput (from_name "Explosives") 2.0 Nothing]
         ]
-      "Uranium-235" ->
-        {- or 238 -}
+      "Light Oil" ->
         [ Recipe.create
             facility
-            12
-            [ Throughput (from_name "Uranium Ore") 10.0 Nothing
+            2
+            [ Throughput (from_name "Water") 30 Nothing,
+              Throughput (from_name "Heavy Oil") 40 Nothing
             ]
-            [ Throughput (from_name "Uranium-235") 1.0 (Just 0.993),
-              Throughput (from_name "Uranium-238") 1.0 (Just 0.007)
-            ]
+            [Throughput (from_name "Light Oil") 30 Nothing]
         ]
+      "Petroleum Gas" ->
+        [ Recipe.create
+            facility
+            2
+            [ Throughput (from_name "Water") 30 Nothing,
+              Throughput (from_name "Light Oil") 30 Nothing
+            ]
+            [Throughput (from_name "Petroleum Gas") 20 Nothing]
+        ]
+      "Lubricant" ->
+        [ Recipe.create
+            facility
+            1
+            [ Throughput (from_name "Heavy Oil") 10 Nothing
+            ]
+            [Throughput (from_name "Lubricant") 10 Nothing]
+        ]
+      name
+        | name `elem` ["Uranium-235", "Uranium-238"] ->
+          [ Recipe.create
+              facility
+              12
+              [ Throughput (from_name "Uranium Ore") 10.0 Nothing
+              ]
+              [ Throughput (from_name "Uranium-235") 1.0 (Just 0.993),
+                Throughput (from_name "Uranium-238") 1.0 (Just 0.007)
+              ]
+          ]
       _ -> []
     _ -> []

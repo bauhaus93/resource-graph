@@ -5,7 +5,7 @@ module App.Factorio.Factorio (get_resources, get_facilities, get_recipes) where
 import App.Facility as Facility (Facility, to_category, to_name)
 import App.Factorio.Facilities (get_facilities)
 import App.Factorio.Names (get_resource_names)
-import App.Factorio.Recipe.Recipe (get_recipes_assembly, get_recipes_chemical, get_recipes_furnance)
+import App.Factorio.Recipe.Recipe (get_recipes_assembly, get_recipes_chemical, get_recipes_furnance, get_recipes_refinery)
 import App.Recipe as Recipe (Recipe)
 import App.Resource as Resource (Resource, from_name, to_name)
 import Data.List (map)
@@ -17,6 +17,7 @@ get_specific_recipe res facility = case (res_name, facility_name, facility_categ
   (_, _, Just "chemical") -> get_recipes_chemical res facility
   (_, _, Just "furnance") -> get_recipes_furnance res facility
   (_, _, Just "assembly") -> get_recipes_assembly res facility
+  (_, _, Just "refinery") -> get_recipes_refinery res facility
   (_, _, _) -> []
   where
     res_name = Resource.to_name res

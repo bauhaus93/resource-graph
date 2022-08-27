@@ -4,10 +4,11 @@ GRAPH_FILE=graph.png
 SRC_FILES_FACTORIO=src/App/Factorio/Factorio.hs \
 	src/App/Factorio/Facilities.hs \
 	src/App/Factorio/Names.hs \
+	src/App/Factorio/Recipe/Recipe.hs \
 	src/App/Factorio/Recipe/Assembly.hs \
 	src/App/Factorio/Recipe/Chemical.hs \
 	src/App/Factorio/Recipe/Furnance.hs \
-	src/App/Factorio/Recipe/Recipe.hs
+	src/App/Factorio/Recipe/Refinery.hs
 
 SRC_FILES=src/Main.hs \
 		  src/App/Draw.hs \
