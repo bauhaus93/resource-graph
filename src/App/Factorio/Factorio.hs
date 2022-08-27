@@ -8,10 +8,9 @@ import App.Factorio.Names (get_resource_names)
 import App.Factorio.Recipe.Recipe (get_recipes_assembly, get_recipes_chemical, get_recipes_furnance)
 import App.Recipe as Recipe (Recipe)
 import App.Resource as Resource (Resource, from_name, to_name)
-import App.Throughput as Throughput (Throughput, with_probability)
-import Data.List (foldr, map, (++))
+import Data.List (map)
 import Data.Maybe (Maybe (Just))
-import Prelude (String, (.), (>>=))
+import Prelude ((>>=))
 
 get_specific_recipe :: Resource -> Facility -> [Recipe]
 get_specific_recipe res facility = case (res_name, facility_name, facility_category) of

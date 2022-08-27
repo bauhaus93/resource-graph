@@ -43,4 +43,4 @@ $(EXECUTABLE_PATH): $(SRC_FILES)
 	ghc $(CFLAGS) -outputdir $(BUILD_DIR) -o $(EXECUTABLE_PATH)  $(SRC_FILES)
 
 clean:
-	rm -f $(BUILD_DIR)/* $(GRAPH_FILE)
+	rm -rf $(BUILD_DIR)/* $(GRAPH_FILE)

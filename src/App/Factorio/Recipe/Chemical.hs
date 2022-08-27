@@ -6,6 +6,8 @@ import App.Facility as Facility (Facility, to_category)
 import App.Recipe as Recipe (Recipe, create)
 import App.Resource as Resource (Resource, from_name, to_name)
 import App.Throughput as Throughput (Throughput (Throughput))
+import Data.Maybe (Maybe (Just, Nothing))
+import Prelude ()
 
 get_recipes_chemical :: Resource -> Facility -> [Recipe]
 get_recipes_chemical res facility =

@@ -2,6 +2,9 @@
 
 module App.Factorio.Names (get_resource_names) where
 
+import Data.List (foldr, (++))
+import Prelude (String)
+
 get_resource_names :: [String]
 get_resource_names = foldr (++) [] [ore_names, fluid_names, intermediate_names]
 

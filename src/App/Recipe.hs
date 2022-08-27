@@ -3,7 +3,7 @@
 module App.Recipe (Recipe, RecipeComparableByOutput, calculate_factor_for_rate, to_comparable_by_output, get_recipes, add_input, add_output, to_inputs, to_output, to_outputs, to_output_resources, calculate_resource_output_rate, to_facility, create) where
 
 import App.Facility as Facility (Facility, to_name, to_speed)
-import App.Resource as Resource (Resource, to_name)
+import App.Resource as Resource (Resource)
 import App.Throughput as Throughput (Throughput (Throughput), to_quantity, to_resource)
 import Data.List (foldr, head, map, tail, (++))
 import Data.Maybe (Maybe (Just, Nothing))
@@ -86,14 +86,6 @@ calculate_resource_output_rate target_resource recipe = calculate_rate recipe . 
 
 to_production_time :: Recipe -> Float
 to_production_time recipe = production_time recipe
-
-to_maybe_name :: Recipe -> Maybe String
-to_maybe_name = name
-
-to_name :: Recipe -> String
-to_name rec = case to_maybe_name rec of
-  Just recipe_name -> recipe_name
-  Nothing -> foldr (++) "" $ map Resource.to_name $ to_output_resources rec
 
 calculate_rate :: Recipe -> Throughput -> Float
 calculate_rate recipe throughput = (Throughput.to_quantity throughput) / (to_production_time recipe)

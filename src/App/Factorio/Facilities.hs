@@ -3,6 +3,8 @@
 module App.Factorio.Facilities (get_facilities) where
 
 import App.Facility as Facility (Facility (Facility))
+import Data.Maybe (Maybe (Just))
+import Prelude ()
 
 get_facilities :: [Facility]
 get_facilities =
