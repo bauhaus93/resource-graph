@@ -16,5 +16,5 @@ data ProductionGraph = Node
 type DemandRate = Double
 
 
-buildProductionGraph :: Factory -> Resource -> DemandRate -> ProductionGraph
-buildProductionGraph factory res rate = Node
+buildProductionGraph :: Factory -> ProductionGraph
+buildProductionGraph factory = Node

@@ -5,6 +5,7 @@ module App.Recipe
   , ThroughputRate
   , calculateRates
   , validCombination
+  , getResources
   ) where
 
 import           App.Facility                   ( Facility
@@ -13,15 +14,19 @@ import           App.Facility                   ( Facility
                                                 , toName
                                                 , toSpeed
                                                 )
+import           App.Resource                   ( Resource )
 import           App.Throughput                as Throughput
                                                 ( Input
                                                 , Output
                                                 , Throughput
                                                 , multiply
+                                                , toResource
                                                 )
 import           Data.List                      ( (++)
                                                 , intercalate
                                                 , map
+                                                , nub
+                                                , sort
                                                 )
 import           Data.Yaml                      ( FromJSON )
 import           GHC.Generics                   ( Generic )
@@ -100,3 +105,7 @@ calculateRates rec fac = ThroughputRate { recipe      = rec
 validCombination :: Facility -> Recipe -> Bool
 validCombination facility recipe =
   toFacilityType facility == facility_type recipe
+
+
+getResources :: Recipe -> [Resource]
+getResources rec = nub $ map toResource $ input rec ++ output rec

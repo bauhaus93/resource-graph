@@ -7,6 +7,7 @@ module App.Throughput
   , Quantity
   , Probability
   , multiply
+  , toResource
   ) where
 
 import           App.Facility                   ( Facility
@@ -50,3 +51,8 @@ multiply fac tp = case tp of
   Throughput res quant -> Throughput res (quant * fac)
   ThroughputProbabilistic res quant prob ->
     ThroughputProbabilistic res (quant * fac) prob
+
+toResource :: Throughput -> Resource
+toResource tp = case tp of
+  Throughput res quant                   -> res
+  ThroughputProbabilistic res quant prob -> res

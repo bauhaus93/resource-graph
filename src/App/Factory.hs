@@ -10,6 +10,7 @@ import           App.Recipe                    as Recipe
                                                 ( Recipe
                                                 , ThroughputRate
                                                 , calculateRates
+                                                , getResources
                                                 , validCombination
                                                 )
 import           App.Resource                  as Resource
@@ -17,6 +18,7 @@ import           App.Resource                  as Resource
 import           Data.List                      ( (++)
                                                 , foldr
                                                 , map
+                                                , nub
                                                 )
 import           Data.Maybe                     ( Maybe(Just, Nothing) )
 import           Data.Yaml                      ( FromJSON )
@@ -25,6 +27,7 @@ import           Prelude                        ( ($)
                                                 , (.)
                                                 , (<$>)
                                                 , (<*>)
+                                                , (>>=)
                                                 , Show
                                                 , String
                                                 , concatMap
@@ -41,7 +44,7 @@ data Factory = Factory
 instance FromJSON Factory
 
 instance Show Factory where
-  show fac = facility_string ++ recipe_string ++ rate_string
+  show fac = facility_string ++ resource_string ++ recipe_string ++ rate_string
    where
     show_list :: Show a => String -> [a] -> String
     show_list title elements =
@@ -50,7 +53,8 @@ instance Show Factory where
     recipe_string   = show_list "*** Recipes ***" $ recipes fac
     rate_string =
       show_list "*** Production Rates ***" $ App.Factory.calculateRates fac
-
+    resource_string =
+      show_list "*** Resources ***" $ App.Factory.getResources fac
 
 calculateRates :: Factory -> [ThroughputRate]
 calculateRates factory =
@@ -59,3 +63,6 @@ calculateRates factory =
   , fac <- facilites factory
   , validCombination fac rec
   ]
+
+getResources :: Factory -> [Resource]
+getResources factory = nub $ recipes factory >>= Recipe.getResources

@@ -65,7 +65,7 @@ recipes:
     production_time: 1
     input:
       - { tag: "Throughput", contents: ["Coal", 1] }
-      - { tag: "Throughput", contents: ["Petroleum gas", 20] }
+      - { tag: "Throughput", contents: ["Petroleum Gas", 20] }
     output:
       - { tag: "Throughput", contents: ["Plastic Bar", 2] }
 
