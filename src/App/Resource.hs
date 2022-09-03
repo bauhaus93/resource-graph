@@ -1,17 +1,20 @@
 {-# LANGUAGE DeriveGeneric #-}
 
 module App.Resource
-  ( Resource (Resource),
-  )
-where
+  ( Resource(Resource)
+  ) where
 
-import Data.List (map)
-import Data.Yaml (FromJSON)
-import GHC.Generics (Generic)
-import Prelude (Eq, Show, String, show, (==))
+import           Data.List                      ( map )
+import           Data.Yaml                      ( FromJSON )
+import           GHC.Generics                   ( Generic )
+import           Prelude                        ( (==)
+                                                , Eq
+                                                , Show
+                                                , String
+                                                , show
+                                                )
 
-data Resource
-  = Resource String
-  deriving (Generic)
+newtype Resource = Resource String
+  deriving Generic
 
 instance FromJSON Resource

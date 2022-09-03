@@ -15,5 +15,4 @@ executable resources
         App.Recipe
         App.Resource
         App.Throughput
-
-
+        App.ProductionGraph

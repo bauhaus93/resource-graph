@@ -27,7 +27,7 @@ facilites:
     facility_type: "refinery"
     speed: 1.0
 
-  - name: "Chemical Planet"
+  - name: "Chemical Plant"
     facility_type: "chemical"
     speed: 1.0
 
@@ -206,7 +206,7 @@ recipes:
     output:
       - { tag: "Throughput", contents: ["Electric Engine Unit", 1] }
 
-  - name: "Flying Robot Framge"
+  - name: "Flying Robot Frame"
     facility_type: "assembly"
     production_time: 20
     input:
