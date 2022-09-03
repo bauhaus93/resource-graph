@@ -1,20 +1,23 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module App.Factory (Factory, create_factory, to_recipes) where
 
+import Data.List (foldr, map, (++))
+import GHC.Generics(Generic)
+import Data.Maybe (Maybe (Just, Nothing))
+import Data.Yaml (FromJSON)
 import App.Facility as Facility (Facility)
-import App.Factorio.Factorio as Factorio (get_facilities, get_recipes, get_resources)
 import App.Recipe as Recipe (Recipe)
 import App.Resource as Resource (Resource, to_name)
-import Data.List (foldr, map, (++))
-import Data.Maybe (Maybe (Just, Nothing))
-import Prelude (Show, String, show)
+import Prelude (Show, String, show, (.), (<$>), (<*>))
 
 data Factory = Factory
   { resources :: [Resource],
     facilites :: [Facility],
     recipes :: [Recipe]
-  }
+  } deriving Generic
+
+instance FromJSON Factory
 
 instance Show Factory where
   show factory =
@@ -49,7 +52,6 @@ to_recipe_string factory = join_strings (map show (to_recipes factory))
 create_factory :: String -> Maybe Factory
 create_factory name =
   case name of
-    "factorio" -> Just (from_parts Factorio.get_resources Factorio.get_facilities Factorio.get_recipes)
     _ -> Nothing
 
 from_parts :: [Resource] -> [Facility] -> ([Resource] -> [Facility] -> [Recipe]) -> Factory

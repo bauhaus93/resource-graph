@@ -1,13 +1,13 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module App.ProductionChain (Node, get_node, App.ProductionChain.to_inputs, to_recipe) where
 
-import App.Factory as Factory (Factory, to_recipes)
-import App.Recipe as Recipe (Recipe, calculate_factor_for_rate, to_comparable_by_output, to_inputs, to_output_resources)
-import App.Resource as Resource (Resource)
-import App.Throughput as Throughput (Throughput, multiply, to_quantity, to_resource)
 import Data.List (elem, head, reverse, sortOn, (++))
 import Data.Maybe (Maybe (Just, Nothing), mapMaybe)
+import App.Factory as Factory (Factory, to_recipes)
+import App.Recipe as Recipe (Recipe, RecipeOutputOrder (RecipeOutputOrder), calculate_factor_for_rate, to_inputs, to_output_resources)
+import App.Resource as Resource (Resource)
+import App.Throughput as Throughput (Throughput, multiply, to_quantity, to_resource)
 import Prelude (Float, Integer, Show, fromIntegral, show, ($), (.), (<$>), (<*>), (>>=))
 
 data Node = Node
@@ -70,4 +70,4 @@ find_recipes_for_resource :: [Recipe] -> Resource -> [Recipe]
 find_recipes_for_resource recipes target_resource = [r | r <- recipes, elem target_resource (Recipe.to_output_resources r)]
 
 sort_recipes_by_resource_output :: Resource -> [Recipe] -> [Recipe]
-sort_recipes_by_resource_output target_resource recipes = sortOn (Recipe.to_comparable_by_output target_resource) recipes
+sort_recipes_by_resource_output target_resource recipes = sortOn (RecipeOutputOrder target_resource) recipes

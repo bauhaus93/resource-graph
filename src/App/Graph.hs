@@ -1,9 +1,9 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module App.Graph (to_graph_node, GraphNode, to_children, to_node, to_id) where
 
-import App.ProductionChain as ProductionChain (Node, to_inputs)
 import Data.List (zip, (++))
+import App.ProductionChain as ProductionChain (Node, to_inputs)
 import Prelude (Integer, String, show, (.))
 
 data GraphNode = GraphNode

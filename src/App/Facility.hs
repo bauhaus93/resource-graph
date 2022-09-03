@@ -1,16 +1,20 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module App.Facility (Facility (Facility), from_name, from_names, with_category, to_category, to_name, to_speed) where
 
 import Data.List (map, (++))
 import Data.Maybe (Maybe (Just, Nothing))
 import Prelude (Float, Show, String, show, (.))
+import GHC.Generics(Generic)
+import Data.Yaml (FromJSON)
 
 data Facility = Facility
   { name :: String,
     speed :: Float,
     category :: Maybe String
-  }
+  } deriving Generic
+
+instance FromJSON Facility
 
 instance Show Facility where
   show facility = (to_name facility) ++ " (" ++ (show . to_speed) facility ++ ")"

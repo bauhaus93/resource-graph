@@ -1,21 +1,26 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
-module App.Recipe (Recipe, RecipeComparableByOutput, calculate_factor_for_rate, to_comparable_by_output, get_recipes, add_input, add_output, to_inputs, to_output, to_outputs, to_output_resources, calculate_resource_output_rate, to_facility, create) where
+module App.Recipe (Recipe, RecipeOutputOrder (RecipeOutputOrder), calculate_factor_for_rate, get_recipes, add_input, add_output, to_inputs, to_output, to_outputs, to_output_resources, calculate_resource_output_rate, to_facility, create) where
 
-import App.Facility as Facility (Facility, to_name, to_speed)
-import App.Resource as Resource (Resource)
-import App.Throughput as Throughput (Throughput (Throughput), to_quantity, to_resource)
 import Data.List (foldr, head, map, tail, (++))
 import Data.Maybe (Maybe (Just, Nothing))
+import App.Facility as Facility (Facility, to_name, to_speed)
+import App.Resource as Resource (Resource)
+import App.Throughput as Throughput (Input, Output, Throughput (Throughput), to_quantity, to_resource)
 import Prelude (Eq, Float, Integer, Ord, Show, String, abs, ceiling, show, ($), (-), (.), (/), (<$>), (<=), (==), (>>=))
+import GHC.Generics(Generic)
+import Data.Yaml (FromJSON)
 
 data Recipe = Recipe
   { name :: Maybe String,
     facility :: Facility,
     production_time :: Float,
-    input :: [Throughput],
-    output :: [Throughput]
-  }
+    input :: [Input],
+    output :: [Output]
+  } deriving Generic
+
+
+instance FromJSON Recipe
 
 instance Show Recipe where
   show recipe = Facility.to_name (facility recipe) ++ " (" ++ recipe_name ++ (show (production_time recipe)) ++ "s)" ++ ": " ++ tail inputs_string ++ " -> " ++ tail outputs_string
@@ -26,20 +31,17 @@ instance Show Recipe where
       inputs_string = (to_inputs recipe) >>= (\e -> ", " ++ show e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
       outputs_string = (to_outputs recipe) >>= (\e -> ", " ++ show e ++ " (" ++ show (calculate_rate recipe e) ++ "/s)")
 
-data RecipeComparableByOutput = RecipeComparableByOutput Resource Recipe
+data RecipeOutputOrder = RecipeOutputOrder Resource Recipe
 
-instance Ord RecipeComparableByOutput where
-  (<=) (RecipeComparableByOutput a_res a_rec) (RecipeComparableByOutput b_res b_rec) = (calculate_resource_output_rate a_res a_rec) <= (calculate_resource_output_rate b_res b_rec)
+instance Ord RecipeOutputOrder where
+  (<=) (RecipeOutputOrder a_res a_rec) (RecipeOutputOrder b_res b_rec) = (calculate_resource_output_rate a_res a_rec) <= (calculate_resource_output_rate b_res b_rec)
 
-instance Eq RecipeComparableByOutput where
-  (==) (RecipeComparableByOutput a_res a_rec) (RecipeComparableByOutput b_res b_rec) =
+instance Eq RecipeOutputOrder where
+  (==) (RecipeOutputOrder a_res a_rec) (RecipeOutputOrder b_res b_rec) =
     abs (output_a - output_b) <= 0.003
     where
       output_a = calculate_resource_output_rate a_res a_rec
       output_b = calculate_resource_output_rate b_res b_rec
-
-to_comparable_by_output :: Resource -> Recipe -> RecipeComparableByOutput
-to_comparable_by_output = RecipeComparableByOutput
 
 create :: Facility -> Float -> [Throughput] -> [Throughput] -> Recipe
 create recipe_facility recipe_production_time inputs outputs = Recipe {name = Nothing, facility = recipe_facility, production_time = recipe_production_time / (Facility.to_speed recipe_facility), input = inputs, output = outputs}

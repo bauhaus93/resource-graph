@@ -1,0 +1,170 @@
+factory:
+  resource:
+
+  facilites:
+    - name: "Stone Furnance"
+      type: "furnance"
+      speed: 1
+
+    - name: "Steel Furnance"
+      type: "furnance"
+      speed: 2
+
+    - name: "Electric Furnance"
+      type: "furnance"
+      speed: 2
+
+    - name: "Assembly MK 1"
+      type: "assembly"
+      speed: 0.5
+
+    - name: "Assembly MK 2"
+      type: "assembly"
+      speed: 0.75
+
+    - name: "Assembly MK 3"
+      type: "assembly"
+      speed: 1.25
+
+    - name: "Oil Refinery"
+      type: "refinery"
+      speed: 1.0
+
+    - name: "Chemical Planet"
+      type: "chemical"
+      speed: 1.0
+
+    - name: "Centrifuge"
+      type: "centrifuge"
+      speed: 1.0
+
+  recipes:
+    - name: "Solid Fuel from Light Oil"
+      facility_type: "chemical"
+      production_time: 2
+      inputs:
+        - name: "Light Oil"
+          quantity: 10
+      outputs:
+        - name: "Solid Fuel"
+          quantity: 1
+
+    - name: "Solid Fuel from Heavy Oil"
+      facility_type: "chemical"
+      production_time: 2
+      inputs:
+        - name: "Heavy Oil"
+          quantity: 20
+      outputs:
+        - name: "Solid Fuel"
+          quantity: 1
+
+    - name: "Solid Fuel from Petroleum Gas"
+      facility_type: "chemical"
+      production_time: 2
+      inputs:
+        - name: "Petroleum Gas"
+          quantity: 20
+      outputs:
+        - name: "Solid Fuel"
+          quantity: 1
+
+    - name: "Plastic Bar"
+      facility_type: "chemical"
+      production_time: 1
+      inputs:
+        - name: "Coal"
+          quantity: 1
+        - name: "Petroleum Gas"
+          quantity: 20
+      outputs:
+        - name: "Plastic bar"
+          quantity: 2
+
+    - name: "Sulfur"
+      facility_type: "chemical"
+      production_time: 1
+      inputs:
+        - name: "Water"
+          quantity: 20
+        - name: "Petroleum Gas"
+          quantity: 30
+      outputs:
+        - name: "Sulfur"
+          quantity: 2
+
+    - name: "Battery"
+      facility_type: "chemical"
+      production_time: 4
+      inputs:
+        - name: "Copper Plate"
+          quantity: 1
+        - name: "Iron Plate"
+          quantity: 1
+        - name: "Sulfuric Acid"
+          quantity: 20
+      outputs:
+        - name: "Battery"
+          quantity: 1
+
+    - name: "Explosives"
+      facility_type: "chemical"
+      production_time: 4
+      inputs:
+        - name: "Coal"
+          quantity: 1
+        - name: "Sulfur"
+          quantity: 1
+        - name: "Water"
+          quantity: 10
+      outputs:
+        - name: "Explosives"
+          quantity: 2
+
+    - name: "Light Oil"
+      facility_type: "chemical"
+      production_time: 2
+      inputs:
+        - name: "Water"
+          quantity: 30
+        - name: "Heavy Oil"
+          quantity: 40
+      outputs:
+        - name: "Light Oil"
+          quantity: 30
+
+    - name: "Petroleum Gas"
+      facility_type: "chemical"
+      production_time: 2
+      inputs:
+        - name: "Water"
+          quantity: 30
+        - name: "Light Oil"
+          quantity: 30
+      outputs:
+        - name: "Petroleum Gas"
+          quantity: 20
+
+    - name: "Lubricant"
+      facility_type: "chemical"
+      production_time: 1
+      inputs:
+        - name: "Heavy Oil"
+          quantity: 10
+      outputs:
+        - name: "Lubricant"
+          quantity: 10
+
+    - name: "Uranium-235"
+      facility_type: "centrifuge"
+      production_time: 12
+      inputs:
+        - name: "Uranium Ore"
+          quantity: 10
+      outputs:
+        - name: "Uranium-235"
+          quantity: 1
+          probability: 0.007
+        - name: "Uranium-238"
+          quantity: 1
+          probability: 0.993

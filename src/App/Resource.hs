@@ -1,13 +1,18 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module App.Resource (Resource, create_resources, to_name, from_name) where
 
 import Data.List (map)
 import Prelude (Eq, Show, String, show, (==))
+import GHC.Generics(Generic)
+import Data.Yaml (FromJSON)
 
 data Resource = Resource
   { name :: String
-  }
+  } deriving Generic
+
+
+instance FromJSON Resource
 
 instance Eq Resource where
   (==) l r = (to_name l) == (to_name r)

@@ -1,13 +1,13 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module App.Draw (draw) where
 
+import Data.List (foldr, map, (++))
 import App.Facility as Facility (to_name)
 import App.Graph as Graph (GraphNode, to_children, to_graph_node, to_id, to_node)
 import App.ProductionChain as ProductionChain (Node, to_recipe)
 import App.Recipe as Recipe (to_facility, to_output_resources)
 import App.Resource as Resource (to_name)
-import Data.List (foldr, map, (++))
 import Prelude (Show, String, show, ($), (.))
 
 newtype DrawableNode = DrawableNode GraphNode

@@ -1,17 +1,25 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE DeriveGeneric #-}
 
-module App.Throughput (Throughput (Throughput), multiply, to_quantity, with_probability, to_resource, calculate_demand_factor) where
+module App.Throughput (Throughput (Throughput), Input, Output, multiply, to_quantity, with_probability, to_resource, calculate_demand_factor) where
 
-import App.Resource (Resource, to_name)
 import Data.List ((++))
 import Data.Maybe (Maybe (Just, Nothing))
+import App.Resource (Resource, to_name)
 import Prelude (Float, Integer, Show, round, show, (*), (.), (/))
+import GHC.Generics(Generic)
+import Data.Yaml (FromJSON)
 
 data Throughput = Throughput
   { resource :: Resource,
     quantity :: Float,
     probability :: Maybe Float
-  }
+  } deriving Generic
+
+instance FromJSON Throughput
+
+type Input = Throughput
+
+type Output = Throughput
 
 instance Show Throughput where
   show throughput = (show . to_quantity) throughput ++ probability_string ++ " x '" ++ ((\e -> (++) e "'") . to_name . to_resource) throughput

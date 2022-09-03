@@ -1,4 +1,3 @@
-{-# LANGUAGE Safe #-}
 
 import App.Draw as Draw (draw)
 import App.Factory as Factory (Factory, create_factory)
@@ -15,7 +14,7 @@ main =
   putStrLn draw_graph
 
 print_factory :: String
-print_factory = maybe "ERROR" show $ Factory.create_factory $ target_factory
+print_factory = maybe "ERROR" show $ Factory.create_factory target_factory
 
 draw_graph :: String
 draw_graph = (maybe "ERROR" draw maybe_production_chain)
