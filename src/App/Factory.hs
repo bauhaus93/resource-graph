@@ -9,15 +9,19 @@ import Data.Yaml (FromJSON)
 import App.Facility as Facility (Facility)
 import App.Recipe as Recipe (Recipe)
 import App.Resource as Resource (Resource)
-import Prelude (Show, String, show, (.), (<$>), (<*>))
+import Prelude (Show, String, show, (.), ($), (<$>), (<*>), concatMap)
 
 data Factory = Factory
-  { resources :: [Resource],
-    facilites :: [Facility],
+  { facilites :: [Facility],
     recipes :: [Recipe]
   } deriving Generic
 
 instance FromJSON Factory
 
 instance Show Factory where
-  show f = "Factory"
+  show fac = facility_string ++ recipe_string
+    where
+      show_list::Show a => String->[a]->String
+      show_list title elements =  title ++ "\n" ++ concatMap (\e -> "\t" ++ show e ++ "\n") elements
+      facility_string = show_list "*** Facilities ***"  $ facilites fac
+      recipe_string = show_list "*** Recipes ***"  $ recipes fac

@@ -1,39 +1,38 @@
-resources: []
 facilites:
   - name: "Stone Furnance"
-    type: "furnance"
+    facility_type: "furnance"
     speed: 1
 
   - name: "Steel Furnance"
-    type: "furnance"
+    facility_type: "furnance"
     speed: 2
 
   - name: "Electric Furnance"
-    type: "furnance"
+    facility_type: "furnance"
     speed: 2
 
   - name: "Assembly MK 1"
-    type: "assembly"
+    facility_type: "assembly"
     speed: 0.5
 
   - name: "Assembly MK 2"
-    type: "assembly"
+    facility_type: "assembly"
     speed: 0.75
 
   - name: "Assembly MK 3"
-    type: "assembly"
+    facility_type: "assembly"
     speed: 1.25
 
   - name: "Oil Refinery"
-    type: "refinery"
+    facility_type: "refinery"
     speed: 1.0
 
   - name: "Chemical Planet"
-    type: "chemical"
+    facility_type: "chemical"
     speed: 1.0
 
   - name: "Centrifuge"
-    type: "centrifuge"
+    facility_type: "centrifuge"
     speed: 1.0
 
 recipes:
