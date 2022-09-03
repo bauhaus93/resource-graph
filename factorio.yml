@@ -1,0 +1,274 @@
+resources: []
+facilites:
+  - name: "Stone Furnance"
+    type: "furnance"
+    speed: 1
+
+  - name: "Steel Furnance"
+    type: "furnance"
+    speed: 2
+
+  - name: "Electric Furnance"
+    type: "furnance"
+    speed: 2
+
+  - name: "Assembly MK 1"
+    type: "assembly"
+    speed: 0.5
+
+  - name: "Assembly MK 2"
+    type: "assembly"
+    speed: 0.75
+
+  - name: "Assembly MK 3"
+    type: "assembly"
+    speed: 1.25
+
+  - name: "Oil Refinery"
+    type: "refinery"
+    speed: 1.0
+
+  - name: "Chemical Planet"
+    type: "chemical"
+    speed: 1.0
+
+  - name: "Centrifuge"
+    type: "centrifuge"
+    speed: 1.0
+
+recipes:
+  - name: "Solid Fuel from Light Oil"
+    facility_type: "chemical"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Light Oil", 10] }
+    output:
+      - { tag: "Throughput", contents: ["Solid Fuel", 1] }
+
+  - name: "Solid Fuel from Heavy Oil"
+    facility_type: "chemical"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Heavy Oil", 20] }
+    output:
+      - { tag: "Throughput", contents: ["Solid Fuel", 1] }
+
+  - name: "Solid Fuel from Petroleum Gas"
+    facility_type: "chemical"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Petroleum Gas", 20] }
+    output:
+      - { tag: "Throughput", contents: ["Solid Fuel", 1] }
+
+  - name: "Plastic Bar"
+    facility_type: "chemical"
+    production_time: 1
+    input:
+      - { tag: "Throughput", contents: ["Coal", 1] }
+      - { tag: "Throughput", contents: ["Petroleum gas", 20] }
+    output:
+      - { tag: "Throughput", contents: ["Plastic Bar", 2] }
+
+  - name: "Sulfur"
+    facility_type: "chemical"
+    production_time: 1
+    input:
+      - { tag: "Throughput", contents: ["Water", 20] }
+      - { tag: "Throughput", contents: ["Petroleum Gas", 30] }
+    output:
+      - { tag: "Throughput", contents: ["Sulfur", 2] }
+
+  - name: "Battery"
+    facility_type: "chemical"
+    production_time: 4
+    input:
+      - { tag: "Throughput", contents: ["Copper Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+      - { tag: "Throughput", contents: ["Sulfuric Acid", 20] }
+    output:
+      - { tag: "Throughput", contents: ["Battery", 1] }
+
+  - name: "Explosives"
+    facility_type: "chemical"
+    production_time: 4
+    input:
+      - { tag: "Throughput", contents: ["Coal", 1] }
+      - { tag: "Throughput", contents: ["Sulfur", 1] }
+      - { tag: "Throughput", contents: ["Water", 10] }
+    output:
+      - { tag: "Throughput", contents: ["Explosives", 2] }
+
+  - name: "Light Oil"
+    facility_type: "chemical"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Water", 30] }
+      - { tag: "Throughput", contents: ["Heavy Oil", 40] }
+    output:
+      - { tag: "Throughput", contents: ["Light Oil", 30] }
+
+  - name: "Petroleum Gas"
+    facility_type: "chemical"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Water", 30] }
+      - { tag: "Throughput", contents: ["Light Oil", 30] }
+    output:
+      - { tag: "Throughput", contents: ["Petroleum Gas", 20] }
+
+  - name: "Lubricant"
+    facility_type: "chemical"
+    production_time: 1
+    input:
+      - { tag: "Throughput", contents: ["Heavy Oil", 10] }
+    output:
+      - { tag: "Throughput", contents: ["Lubricant", 10] }
+
+  - name: "Uranium-235"
+    facility_type: "centrifuge"
+    production_time: 12
+    input:
+      - { tag: "Throughput", contents: ["Uranium Ore", 10] }
+    output:
+      - { tag: "ThroughputProbabilistic", contents: ["Uranium-235", 1, 0.007] }
+      - { tag: "ThroughputProbabilistic", contents: ["Uranium-238", 1, 0.993] }
+
+  - name: "Copper Cable"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Copper Plate", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Copper Cable", 2] }
+
+  - name: "Iron Stick"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Iron Stick", 2] }
+
+  - name: "Iron Gear Wheel"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 2] }
+    output:
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 1] }
+
+  - name: "Electronic Circuit"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+      - { tag: "Throughput", contents: ["Copper Cable", 3] }
+    output:
+      - { tag: "Throughput", contents: ["Electronic Circuit", 1] }
+
+  - name: "Advanced Circuit"
+    facility_type: "assembly"
+    production_time: 6
+    input:
+      - { tag: "Throughput", contents: ["Plastic Bar", 2] }
+      - { tag: "Throughput", contents: ["Copper Cable", 4] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 2] }
+    output:
+      - { tag: "Throughput", contents: ["Advanced Circuit", 1] }
+
+  - name: "Processing Unit"
+    facility_type: "assembly"
+    production_time: 10
+    input:
+      - { tag: "Throughput", contents: ["Sulfuric Acid", 5] }
+      - { tag: "Throughput", contents: ["Advanced Circuit", 2] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 20] }
+    output:
+      - { tag: "Throughput", contents: ["Processing Unit", 1] }
+
+  - name: "Engine Unit"
+    facility_type: "assembly"
+    production_time: 10
+    input:
+      - { tag: "Throughput", contents: ["Steel Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 1] }
+      - { tag: "Throughput", contents: ["Pipe", 2] }
+    output:
+      - { tag: "Throughput", contents: ["Engine Unit", 1] }
+
+  - name: "Electric Engine Unit"
+    facility_type: "assembly"
+    production_time: 10
+    input:
+      - { tag: "Throughput", contents: ["Electronic Circuit", 2] }
+      - { tag: "Throughput", contents: ["Engine Unit", 1] }
+      - { tag: "Throughput", contents: ["Lubricant", 20] }
+    output:
+      - { tag: "Throughput", contents: ["Electric Engine Unit", 1] }
+
+  - name: "Flying Robot Framge"
+    facility_type: "assembly"
+    production_time: 20
+    input:
+      - { tag: "Throughput", contents: ["Steel Plate", 2] }
+      - { tag: "Throughput", contents: ["Battery", 1] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 3] }
+      - { tag: "Throughput", contents: ["Electric Engine Unit", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Flying Robot Frame", 1] }
+
+  - name: "Basic Oil Processing"
+    facility_type: "refinery"
+    production_time: 5
+    input:
+      - { tag: "Throughput", contents: ["Crude Oil", 100] }
+    output:
+      - { tag: "Throughput", contents: ["Petroleum Gas", 45] }
+
+  - name: "Advanced Oil Processing"
+    facility_type: "refinery"
+    production_time: 5
+    input:
+      - { tag: "Throughput", contents: ["Crude Oil", 100] }
+      - { tag: "Throughput", contents: ["Water", 50] }
+    output:
+      - { tag: "Throughput", contents: ["Heavy Oil", 25] }
+      - { tag: "Throughput", contents: ["Light Oil", 45] }
+      - { tag: "Throughput", contents: ["Petroleum Gas", 55] }
+
+  - name: "Coal Liquefaction"
+    facility_type: "refinery"
+    production_time: 5
+    input:
+      - { tag: "Throughput", contents: ["Coal", 10] }
+      - { tag: "Throughput", contents: ["Heavy Oil", 25] }
+      - { tag: "Throughput", contents: ["Steam", 50] }
+    output:
+      - { tag: "Throughput", contents: ["Heavy Oil", 90] }
+      - { tag: "Throughput", contents: ["Light Oil", 20] }
+      - { tag: "Throughput", contents: ["Petroleum Gas", 10] }
+
+  - name: "Iron Plate"
+    facility_type: "furnance"
+    production_time: 3.2
+    input:
+      - { tag: "Throughput", contents: ["Iron Ore", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+
+  - name: "Copper Plate"
+    facility_type: "furnance"
+    production_time: 3.2
+    input:
+      - { tag: "Throughput", contents: ["Copper Ore", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Copper Plate", 1] }
+
+  - name: "Steel Plate"
+    facility_type: "furnance"
+    production_time: 16
+    input:
+      - { tag: "Throughput", contents: ["Iron Ore", 5] }
+    output:
+      - { tag: "Throughput", contents: ["Steel Plate", 1] }

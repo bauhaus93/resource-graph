@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 
-module App.Facility (Facility (Facility), from_name, from_names, with_category, to_category, to_name, to_speed) where
+module App.Facility (Facility (Facility), FacilityType) where
 
 import Data.List (map, (++))
 import Data.Maybe (Maybe (Just, Nothing))
@@ -16,23 +16,6 @@ data Facility = Facility
 
 instance FromJSON Facility
 
-instance Show Facility where
-  show facility = (to_name facility) ++ " (" ++ (show . to_speed) facility ++ ")"
 
-from_name :: String -> Facility
-from_name facility_name = Facility {name = facility_name, speed = 1.0, category = Nothing}
+type FacilityType = String
 
-from_names :: [String] -> [Facility]
-from_names names = map from_name names
-
-with_category :: String -> Facility -> Facility
-with_category category_name facility = facility {category = Just category_name}
-
-to_name :: Facility -> String
-to_name facility = name facility
-
-to_category :: Facility -> Maybe String
-to_category facility = category facility
-
-to_speed :: Facility -> Float
-to_speed facility = speed facility
