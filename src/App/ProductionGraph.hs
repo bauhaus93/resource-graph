@@ -1,6 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
 
-
 module App.ProductionGraph
   () where
 
@@ -12,9 +11,10 @@ import           Prelude                        ( Double )
 
 
 data ProductionGraph = Node
+  { throughput_rate :: ThroughputRate
+  , children        :: [ProductionGraph]
+  }
 
-type DemandRate = Double
 
-
-buildProductionGraph :: Factory -> ProductionGraph
-buildProductionGraph factory = Node
+{-- TODO: buildProductionGraph :: Factory -> ProductionGraph
+buildProductionGraph factory = ProductionGraph  --}
