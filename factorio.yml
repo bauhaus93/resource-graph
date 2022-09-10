@@ -271,3 +271,447 @@ recipes:
       - { tag: "Throughput", contents: ["Iron Ore", 5] }
     output:
       - { tag: "Throughput", contents: ["Steel Plate", 1] }
+
+  - name: "Rocket Control Unit"
+    facility_type: "assembly"
+    production_time: 30
+    input:
+      - { tag: "Throughput", contents: ["Processing Unit", 1] }
+      - { tag: "Throughput", contents: ["Speed Module 1", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Rocket Control Unit", 1] }
+
+  - name: "Low Density Structure"
+    facility_type: "assembly"
+    production_time: 20
+    input:
+      - { tag: "Throughput", contents: ["Copper Plate", 20] }
+      - { tag: "Throughput", contents: ["Steel Plate", 2] }
+      - { tag: "Throughput", contents: ["Plastic Bar", 5] }
+    output:
+      - { tag: "Throughput", contents: ["Low Density Structure", 1] }
+
+  - name: "Rocket Fuel"
+    facility_type: "assembly"
+    production_time: 30
+    input:
+      - { tag: "Throughput", contents: ["Solid Fuel", 10] }
+      - { tag: "Throughput", contents: ["Light Oil", 10] }
+    output:
+      - { tag: "Throughput", contents: ["Rocket Fuel", 1] }
+
+  - name: "Nuclear Fuel"
+    facility_type: "centrifuge"
+    production_time: 90
+    input:
+      - { tag: "Throughput", contents: ["Rocket Fuel", 1] }
+      - { tag: "Throughput", contents: ["Uranium-235", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Nuclear Fuel", 1] }
+
+  - name: "Uranium Fuel Cell"
+    facility_type: "assembly"
+    production_time: 10
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 10] }
+      - { tag: "Throughput", contents: ["Uranium-235", 1] }
+      - { tag: "Throughput", contents: ["Uranium-238", 19] }
+    output:
+      - { tag: "Throughput", contents: ["Uranium Fuel Cell", 1] }
+
+  ########################## Science Packs #################################
+  - name: "Automation Science Pack"
+    facility_type: "assembly"
+    production_time: 5
+    input:
+      - { tag: "Throughput", contents: ["Copper Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Automation Science Pack", 1] }
+
+  - name: "Logistic Science Pack"
+    facility_type: "assembly"
+    production_time: 6
+    input:
+      - { tag: "Throughput", contents: ["Transport Belt", 1] }
+      - { tag: "Throughput", contents: ["Inserter", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Logistic Science Pack", 1] }
+
+  - name: "Military Science Pack"
+    facility_type: "assembly"
+    production_time: 10
+    input:
+      - { tag: "Throughput", contents: ["Piercing Rounds Magazine", 1] }
+      - { tag: "Throughput", contents: ["Grenade", 1] }
+      - { tag: "Throughput", contents: ["Wall", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Military Science Pack", 2] }
+
+  - name: "Chemical Science Pack"
+    facility_type: "assembly"
+    production_time: 24
+    input:
+      - { tag: "Throughput", contents: ["Sulfur", 1] }
+      - { tag: "Throughput", contents: ["Advanced Circuit", 3] }
+      - { tag: "Throughput", contents: ["Engine Unit", 2] }
+    output:
+      - { tag: "Throughput", contents: ["Chemical Science Pack", 2] }
+
+  - name: "Production Science Pack"
+    facility_type: "assembly"
+    production_time: 21
+    input:
+      - { tag: "Throughput", contents: ["Rail", 30] }
+      - { tag: "Throughput", contents: ["Electric Furnance", 1] }
+      - { tag: "Throughput", contents: ["Productivity Module 1", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Production Science Pack", 3] }
+
+  - name: "Utility Science Pack"
+    facility_type: "assembly"
+    production_time: 21
+    input:
+      - { tag: "Throughput", contents: ["Processing Unit", 2] }
+      - { tag: "Throughput", contents: ["Flying Robot Frame", 1] }
+      - { tag: "Throughput", contents: ["Low Density Structure", 3] }
+    output:
+      - { tag: "Throughput", contents: ["Utility Science Pack", 3] }
+
+  ########################## Buildings #################################
+
+  - name: "Wooden Chest"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Wood", 2] }
+    output:
+      - { tag: "Throughput", contents: ["Wooden Chest", 1] }
+
+  - name: "Iron Chest"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 8] }
+    output:
+      - { tag: "Throughput", contents: ["Iron Chest", 1] }
+
+  - name: "Steel Chest"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Steel Plate", 8] }
+    output:
+      - { tag: "Throughput", contents: ["Steel Chest", 1] }
+
+  - name: "Storage Tank"
+    facility_type: "assembly"
+    production_time: 3
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 20] }
+      - { tag: "Throughput", contents: ["Steel Plate", 5] }
+    output:
+      - { tag: "Throughput", contents: ["Storage Tank", 1] }
+
+  - name: "Transport Belt"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Transport Belt", 2] }
+
+  - name: "Fast Transport Belt"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Transport Belt", 1] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 5] }
+    output:
+      - { tag: "Throughput", contents: ["Fast Transport Belt", 2] }
+
+  - name: "Express Transport Belt"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Fast Transport Belt", 1] }
+      - { tag: "Throughput", contents: ["Lubricant", 20] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 10] }
+    output:
+      - { tag: "Throughput", contents: ["Fast Transport Belt", 1] }
+
+  - name: "Underground Belt"
+    facility_type: "assembly"
+    production_time: 1
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 10] }
+      - { tag: "Throughput", contents: ["Transport Belt", 5] }
+    output:
+      - { tag: "Throughput", contents: ["Underground Belt", 2] }
+
+  - name: "Fast Underground Belt"
+    facility_type: "assembly"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 40] }
+      - { tag: "Throughput", contents: ["Underground Belt", 2] }
+    output:
+      - { tag: "Throughput", contents: ["Fast Underground Belt", 2] }
+
+  - name: "Express  Underground Belt"
+    facility_type: "assembly"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 80] }
+      - { tag: "Throughput", contents: ["Fast Underground Belt", 2] }
+      - { tag: "Throughput", contents: ["Lubricant", 40] }
+    output:
+      - { tag: "Throughput", contents: ["Express Underground Belt", 2] }
+
+  - name: "Splitter"
+    facility_type: "assembly"
+    production_time: 1
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 5] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 5] }
+      - { tag: "Throughput", contents: ["Transport Belt", 4] }
+    output:
+      - { tag: "Throughput", contents: ["Splitter", 1] }
+
+  - name: "Fast Splitter"
+    facility_type: "assembly"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 10] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 10] }
+      - { tag: "Throughput", contents: ["Splitter", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Fast Splitter", 1] }
+
+  - name: "Express Splitter"
+    facility_type: "assembly"
+    production_time: 2
+    input:
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 10] }
+      - { tag: "Throughput", contents: ["Advanced Circuit", 10] }
+      - { tag: "Throughput", contents: ["Fast Splitter", 1] }
+      - { tag: "Throughput", contents: ["Lubricant", 80] }
+    output:
+      - { tag: "Throughput", contents: ["Express Splitter", 1] }
+
+  - name: "Burner Inserter"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Burner Inserter", 1] }
+
+  - name: "Inserter"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 1] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Inserter", 1] }
+
+  - name: "Long-Handed Inserter"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 1] }
+      - { tag: "Throughput", contents: ["Inserter", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Long-Handed Inserter", 1] }
+
+  - name: "Fast Inserter"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 2] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 2] }
+      - { tag: "Throughput", contents: ["Inserter", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Fast Inserter", 1] }
+
+  - name: "Filter Inserter"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Electronic Circuit", 4] }
+      - { tag: "Throughput", contents: ["Fast Inserter", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Filter Inserter", 1] }
+
+  - name: "Stack Inserter"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 15] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 15] }
+      - { tag: "Throughput", contents: ["Advanced Circuit", 1] }
+      - { tag: "Throughput", contents: ["Fast Inserter", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Stack Inserter", 1] }
+
+  - name: "Stack Filter Inserter"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Electronic Circuit", 5] }
+      - { tag: "Throughput", contents: ["Stack Inserter", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Stack Filter Inserter", 1] }
+
+  - name: "Small Electric Pole"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Wood", 1] }
+      - { tag: "Throughput", contents: ["Copper Cable", 2] }
+    output:
+      - { tag: "Throughput", contents: ["Small Electric Pole", 2] }
+
+  - name: "Medium Electric Pole"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Copper Plate", 2] }
+      - { tag: "Throughput", contents: ["Steel Plate", 2] }
+      - { tag: "Throughput", contents: ["Iron Stick", 4] }
+    output:
+      - { tag: "Throughput", contents: ["Medium Electric Pole", 1] }
+
+  - name: "Big Electric Pole"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Copper Plate", 5] }
+      - { tag: "Throughput", contents: ["Steel Plate", 5] }
+      - { tag: "Throughput", contents: ["Iron Stick", 8] }
+    output:
+      - { tag: "Throughput", contents: ["Big Electric Pole", 1] }
+
+  - name: "Substation"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Copper Plate", 5] }
+      - { tag: "Throughput", contents: ["Steel Plate", 10] }
+      - { tag: "Throughput", contents: ["Advanced Circuit", 5] }
+    output:
+      - { tag: "Throughput", contents: ["Substation", 1] }
+
+  - name: "Pipe"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Pipe", 1] }
+
+  - name: "Pipe To Ground"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 5] }
+      - { tag: "Throughput", contents: ["Pipe", 10] }
+    output:
+      - { tag: "Throughput", contents: ["Pipe To Ground", 2] }
+
+  - name: "Pump"
+    facility_type: "assembly"
+    production_time: 1
+    input:
+      - { tag: "Throughput", contents: ["Steel Plate", 1] }
+      - { tag: "Throughput", contents: ["Engine Unit", 1] }
+      - { tag: "Throughput", contents: ["Pipe", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Pump", 1] }
+
+  - name: "Rail"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Stone", 1] }
+      - { tag: "Throughput", contents: ["Steel Plate", 1] }
+      - { tag: "Throughput", contents: ["Iron Stick", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Rail", 2] }
+
+  - name: "Train Stop"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 6] }
+      - { tag: "Throughput", contents: ["Steel Plate", 3] }
+      - { tag: "Throughput", contents: ["Iron Stick", 6] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 5] }
+    output:
+      - { tag: "Throughput", contents: ["Train Stop", 1] }
+
+  - name: "Rail signal"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 5] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Rail Signal", 1] }
+
+  - name: "Rail Chain Signal"
+    facility_type: "assembly"
+    production_time: 0.5
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 5] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 1] }
+    output:
+      - { tag: "Throughput", contents: ["Rail Chain Signal", 1] }
+
+  - name: "Locomotive"
+    facility_type: "assembly"
+    production_time: 4
+    input:
+      - { tag: "Throughput", contents: ["Steel Plate", 30] }
+      - { tag: "Throughput", contents: ["Electronic Circuit", 10] }
+      - { tag: "Throughput", contents: ["Engine Unit", 20] }
+    output:
+      - { tag: "Throughput", contents: ["Locomotive", 1] }
+
+  - name: "Cargo Wagon"
+    facility_type: "assembly"
+    production_time: 1
+    input:
+      - { tag: "Throughput", contents: ["Iron Plate", 20] }
+      - { tag: "Throughput", contents: ["Steel Plate", 30] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 10] }
+    output:
+      - { tag: "Throughput", contents: ["Cargo Wagon", 1] }
+
+  - name: "Fluid Wagon"
+    facility_type: "assembly"
+    production_time: 1.5
+    input:
+      - { tag: "Throughput", contents: ["Steel Plate", 16] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 10] }
+      - { tag: "Throughput", contents: ["Storage tank", 1] }
+      - { tag: "Throughput", contents: ["Pipe", 8] }
+    output:
+      - { tag: "Throughput", contents: ["Fluid Wagon", 1] }
+
+  - name: "Artillery Wagon"
+    facility_type: "assembly"
+    production_time: 4
+    input:
+      - { tag: "Throughput", contents: ["Steel Plate", 40] }
+      - { tag: "Throughput", contents: ["Iron Gear Wheel", 10] }
+      - { tag: "Throughput", contents: ["Advanced Circuit", 20] }
+      - { tag: "Throughput", contents: ["Engine Unit", 64] }
+      - { tag: "Throughput", contents: ["Pipe", 16] }
+    output:
+      - { tag: "Throughput", contents: ["Artillery Wagon", 1] }
