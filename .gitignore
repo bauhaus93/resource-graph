@@ -1,5 +1,6 @@
 *.hi
 *.o
 *.png
+*.dot
 build
 dist-newstyle

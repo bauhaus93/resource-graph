@@ -2,10 +2,11 @@
 
 module App.Recipe
   ( Recipe
-  , ThroughputRate
-  , calculateRates
-  , validCombination
   , getResources
+  , getProducedResources
+  , getNeededResources
+  , supplies
+  , App.Recipe.toName
   ) where
 
 import           App.Facility                   ( Facility
@@ -28,9 +29,18 @@ import           Data.List                      ( (++)
                                                 , nub
                                                 , sort
                                                 )
+import           Data.Maybe                     ( Maybe(Just, Nothing)
+                                                , maybe
+                                                )
+import           Data.Set                       ( fromList
+                                                , intersection
+                                                , null
+                                                , toList
+                                                )
 import           Data.Yaml                      ( FromJSON )
 import           GHC.Generics                   ( Generic )
 import           Prelude                        ( ($)
+                                                , (&&)
                                                 , (.)
                                                 , (/)
                                                 , (==)
@@ -40,6 +50,7 @@ import           Prelude                        ( ($)
                                                 , Integer
                                                 , Show
                                                 , String
+                                                , not
                                                 , show
                                                 )
 
@@ -51,6 +62,10 @@ data Recipe = Recipe
   , output          :: [Output]
   }
   deriving Generic
+
+
+instance Eq Recipe where
+  (==) l r = name l == name r
 
 instance FromJSON Recipe
 
@@ -67,45 +82,20 @@ instance Show Recipe where
     input_str  = intercalate ", " $ map show $ input rec
     output_str = intercalate ", " $ map show $ output rec
 
-
-data ThroughputRate = ThroughputRate
-  { recipe      :: Recipe
-  , facility    :: Facility
-  , input_rate  :: [Input]
-  , output_rate :: [Output]
-  }
-
-
-instance Show ThroughputRate where
-  show rate =
-    recipe_name
-      ++ " @ "
-      ++ facility_name
-      ++ ": "
-      ++ input_str
-      ++ " ==> "
-      ++ output_str
-   where
-    recipe_name   = (name . recipe) rate
-    facility_name = (toName . facility) rate
-    input_str     = intercalate ", " $ map show $ input_rate rate
-    output_str    = intercalate ", " $ map show $ output_rate rate
-
-calculateRates :: Recipe -> Facility -> ThroughputRate
-calculateRates rec fac = ThroughputRate { recipe      = rec
-                                        , facility    = fac
-                                        , input_rate  = rate_map $ input rec
-                                        , output_rate = rate_map $ output rec
-                                        }
- where
-  rate_map :: [Throughput] -> [Throughput]
-  rate_map = map (multiply $ 1 / (production_time rec / toSpeed fac))
-
-
-validCombination :: Facility -> Recipe -> Bool
-validCombination facility recipe =
-  toFacilityType facility == facility_type recipe
-
+supplies :: Recipe -> Recipe -> Bool
+supplies src_recipe dest_recipe = (not . null) $ intersection
+  ((fromList . getNeededResources) dest_recipe)
+  ((fromList . getProducedResources) src_recipe)
 
 getResources :: Recipe -> [Resource]
-getResources rec = nub $ map toResource $ input rec ++ output rec
+getResources recipe =
+  nub $ getProducedResources recipe ++ getNeededResources recipe
+
+toName :: Recipe -> String
+toName = name
+
+getProducedResources :: Recipe -> [Resource]
+getProducedResources recipe = map toResource $ input recipe
+
+getNeededResources :: Recipe -> [Resource]
+getNeededResources recipe = map toResource $ output recipe
